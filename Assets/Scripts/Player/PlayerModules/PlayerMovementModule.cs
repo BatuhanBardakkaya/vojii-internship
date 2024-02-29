@@ -22,6 +22,7 @@ namespace Assets.Scripts.Player.PlayerModules
         private bool isGliding = false; // Flag to check if the player is currently gliding.
         public float turnSpeed = 10f; // Speed at which the player turns to face movement direction.
         private Vector3 initialPosition;
+        
         public event Action OnJump;
         public AudioSource Wind;
 
@@ -29,6 +30,8 @@ namespace Assets.Scripts.Player.PlayerModules
         public Animator skeletonMageAnimator;
         private float m_AnimHorizontal, m_AnimVertical;
         [SerializeField] private float m_AnimSmoothingSpeed = 2;
+        //Will delete
+        public int fpsTarget = 60;
 
 
 
@@ -62,11 +65,15 @@ namespace Assets.Scripts.Player.PlayerModules
                 return;
 
             }
+
+            Application.targetFrameRate = fpsTarget;
             Move();
             
             HandleMovementInput();
             HandleJumpInput();
             HandleGlideInput();
+            ApplyGlideGravity();
+            Rotate();
             
         }
 
@@ -78,9 +85,6 @@ namespace Assets.Scripts.Player.PlayerModules
                 return;
             }
             base.FixedTick();
-            ApplyGlideGravity();
-           
-            Rotate();
         }
 
         // HandleMovementInput updates the movement speed based on whether the player is sprinting.
@@ -134,7 +138,7 @@ namespace Assets.Scripts.Player.PlayerModules
         {
             
             Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            var newspeed = MovementSpeed * Time.fixedDeltaTime;
+            var newspeed = MovementSpeed * Time.deltaTime;
             Vector3 movement = Camera.main.transform.TransformDirection(input) * newspeed;
             movement.y = 0;
             Rigidbody.MovePosition(Rigidbody.position + movement);

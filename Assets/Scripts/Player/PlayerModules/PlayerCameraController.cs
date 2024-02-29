@@ -65,10 +65,10 @@ public class PlayerCameraController : AgentModuleBase,IResettable
     {
         Debug.Log("Jumping");
     }
-    // IResettable interface'inden gelen ResetToInitialState metodunun uygulanması
+    
     public void ResetToInitialState()
     {
-        // Kamerayı başlangıç durumuna döndür
+        
         CameraT.position = initialPosition;
         CameraT.rotation = initialRotation;
         distance = initialDistance;
