@@ -1,58 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Agent.AgentModule;
+using Fireball;
 using UnityEngine;
 
 public class PlayerSpawnFireBall : AgentModuleBase
 {
-    public GameObject firePoint;
+   // public GameObject firePoint;
     public List<GameObject> frball = new List<GameObject>();
     public GameObject fireBallController;
+    //public GameObject specialFireballPrefab; 
+    private int shotCount = 0;
     
     public float fireRate = 0.5f; // Ateş etme hızı (saniye cinsinden)
     private float nextFireTime = 0f;
-    public GameObject Player; 
+    public GameObject Player;
+    private Animator anim;
+    public GameObject FireBallPrefab;
+    
+    public PlayerSpawnSpecialFire specialFireSpawner;
 
     
     
     
-    private GameObject effectToSpawn;
+    // private GameObject effectToSpawn;
     public override IEnumerator IE_Initialize()
     {
-        effectToSpawn = frball[0];
+        //effectToSpawn = frball[0];
+        
         
         yield return null;
     }
 
-    public override void Tick()
-    {
-        if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
-        {
-            nextFireTime = Time.time + fireRate; // Sonraki ateş için zamanı ayarla
-            SpawnFireball();
-        }
-    }
+   
 
+    
     void SpawnFireball()
     {
-        GameObject fireball;
-        fireball = null;
+        GameObject fireballPrefabToUse;
+        
+       
+        fireballPrefabToUse = frball[0]; // Diğer atışlarda varsayılan fireball
         
         
-        if (firePoint != null && effectToSpawn.tag == "Fireball")
-        {     
+       
+            GameObject fireball = Instantiate(fireballPrefabToUse, Player.transform.localPosition + Player.transform.forward+new Vector3(0,1,0), Quaternion.identity);
             
-            fireball = Instantiate(effectToSpawn, fireBallController.transform);
-            fireball.transform.SetPositionAndRotation(firePoint.transform.position,Quaternion.identity);
             Vector3 StartForWardVector = Player.transform.forward;
             FireBallController.fireballs.Add(fireball);
             FireBallController.startPositions[fireball] = fireball.transform.position;
             PlayerFireBallMove.StartForWardVectors.Add(StartForWardVector);
-            
-        }
-        else
-        {
-                Debug.Log("No Fire Point");
-        }
+      
     }
 }

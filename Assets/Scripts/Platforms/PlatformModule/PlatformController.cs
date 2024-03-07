@@ -73,7 +73,7 @@ public class PlatformController : MoveModuleBase
         if (collision.gameObject.tag=="Player")
         {
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
-            Vector3 adjustVelocity=new Vector3(this.Rigidbody.velocity.x,rb.velocity.y,this.Rigidbody.velocity.z);
+            Vector3 adjustVelocity=new Vector3(this.Rigidbody.velocity.x,this.Rigidbody.velocity.y,this.Rigidbody.velocity.z);
             rb.velocity = adjustVelocity;
         }
     }

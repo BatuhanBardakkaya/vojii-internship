@@ -9,6 +9,7 @@ TagManager:
   - Coin
   - Fireball
   - Enemy_Skeleton
+  - SpecialFireBall
   layers:
   - Default
   - TransparentFX

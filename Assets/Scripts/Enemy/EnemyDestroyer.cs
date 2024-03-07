@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Agent.AgentModule;
@@ -11,10 +12,25 @@ public class EnemyDestroyer : AgentModuleBase
     {
         if (collision.gameObject.CompareTag("Fireball"))
         {
+            TakeDamage(25); 
+        }else if (collision.gameObject.CompareTag("SpecialFireBall"))
+        {
+            Debug.Log("Hitted by special");
             TakeDamage(50); 
         }
+        
         FireballDestroy(collision);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Fireball"))
+        {
+            Debug.Log("Ontrigger works");
+            TakeDamage(25);
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         health -= damage;
