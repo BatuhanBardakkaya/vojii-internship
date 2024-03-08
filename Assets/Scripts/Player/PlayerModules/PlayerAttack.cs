@@ -7,8 +7,11 @@ namespace Assets.Scripts.Player.PlayerModules
     public class PlayerAttack : AgentModuleBase
     {
 
-        private Animator animator;
-        private int attackCount = 0; // Saldırı sayısını takip etmek için bir sayac
+        public Animator animator;
+        public int attackCount = 0;
+        public bool Attack;
+        
+        
 
         public override IEnumerator IE_Initialize()
         {
@@ -18,8 +21,9 @@ namespace Assets.Scripts.Player.PlayerModules
 
         public override void Tick()
         {
-            if (Input.GetMouseButtonDown(0))
+           /* if (Input.GetMouseButtonDown(0)&& !Attack )
             {
+                Attack = true;
                 attackCount++; // Saldırı sayısını artır
                 if (attackCount % 3 == 0)
                 {
@@ -30,8 +34,43 @@ namespace Assets.Scripts.Player.PlayerModules
                 {
                     animator.SetTrigger("FireBall");
                 }
+            }*/
+
+            Combo();
+           
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                animator.SetTrigger("BlueFireBall");
             }
+            
         }
+        public void Combo()
+        {
+            if (Input.GetMouseButtonDown(0)&& !Attack)
+            {
+                Attack = true;
+                animator.SetTrigger(""+attackCount);
+            }
+            
+        }
+
+        public void Start_Combo()
+        {
+            Attack = false;
+            if (attackCount<3)
+            {
+                attackCount++;
+            }
+            
+        }
+
+        public void Finish_Ani()
+        {
+            Attack = false;
+            attackCount = 0;
+        }
+        
     }
+    
 }
       

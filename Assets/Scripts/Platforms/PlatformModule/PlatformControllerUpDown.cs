@@ -2,6 +2,7 @@ using Assets.Scripts.MoveThings;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlatformControllerUpDown : MoveModuleBase,IResettable
 {
@@ -17,29 +18,32 @@ public class PlatformControllerUpDown : MoveModuleBase,IResettable
 
     public override IEnumerator IE_Initialize()
     {
-        StartCoroutine(base.IE_Initialize());
-        Rigidbody = GetComponent<Rigidbody>();
-        forcespeed = speed;
+        //StartCoroutine(base.IE_Initialize());
+       // Rigidbody = GetComponent<Rigidbody>();
+       // forcespeed = speed;
         initialPosition = transform.position;
+        transform.DOLocalMoveY(3.62f, 2f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        
+        
         yield return null;
     }
     public void ResetToInitialState()
     {
         transform.position = initialPosition;
-        forcespeed = speed; 
-        timer = false; 
-        time = 0;                          
+        //forcespeed = speed; 
+        //timer = false; 
+       // time = 0;                          
     }
 
     public override void Tick()
     {
         base.Tick();
-        PlatformLeftMove();
+       // PlatformLeftMove();
         
     }
   
 
-    private void PlatformLeftMove()
+  /*  private void PlatformLeftMove()
     {
         Rigidbody.velocity = Vector3.up * forcespeed;
 
@@ -82,6 +86,6 @@ public class PlatformControllerUpDown : MoveModuleBase,IResettable
             Vector3 adjustVelocity = new Vector3(this.Rigidbody.velocity.x, rb.velocity.y, this.Rigidbody.velocity.z);
             rb.velocity = adjustVelocity;
         }
-    }
+    }*/
 
 }

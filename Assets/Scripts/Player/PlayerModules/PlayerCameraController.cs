@@ -112,11 +112,7 @@ public class PlayerCameraController : AgentModuleBase,IResettable
             CameraT.position = position;
         
     }
-    void LateUpdate()
-    {
-        
-    }
-
+ 
     // ClampAngle function ensures the angle stays within the specified min and max range
     public static float ClampAngle(float angle, float min, float max)
     {

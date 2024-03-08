@@ -41,6 +41,8 @@ namespace Assets.Scripts.Player.PlayerModules
         private Vector3 initalPosition;
 
 
+        private Vector3 lastPlatformPosition;
+        private Transform movingPlatform;
         public override IEnumerator IE_Initialize()
         {
             controller = GetComponent<CharacterController>();
@@ -59,6 +61,13 @@ namespace Assets.Scripts.Player.PlayerModules
             RotateTowardsCameraDirection(); // Bu satırı her karede çağırarak karakterin kamera ile dönüşünü senkronize eder
             base.Tick();
         }
+
+        public override void FixedTick()
+        {
+            //PlatformCheck();
+            base.FixedTick();
+        }
+
 
         private void HandleInput()
         {
@@ -167,9 +176,54 @@ namespace Assets.Scripts.Player.PlayerModules
             skeletonMageAnimator.SetFloat("vertical", m_AnimVertical);
         }
 
+        private void PlatformCheck()
+        {
+            if (movingPlatform != null)
+            {
+                // Platformun mevcut pozisyonu ve son kaydedilen pozisyonu arasındaki farkı hesapla
+                Vector3 deltaPosition = movingPlatform.position - lastPlatformPosition;
+        
+                // Karakterin pozisyonunu bu delta kadar artır, böylece platform ile birlikte hareket etmiş olur
+                transform.position += deltaPosition;
+        
+                // Son platform pozisyonunu güncelle
+                lastPlatformPosition = movingPlatform.position;
+            }
+        }
+        /* private void OnCollisionEnter(Collision collision)
+         {
+             if (collision.gameObject.CompareTag("Platform"))
+             {
+                 Debug.Log("I am in");
+                 transform.SetParent(collision.transform); // Karakteri platformun çocuğu yap
+             }
+         }
+
+
+         private void OnCollisionExit(Collision collision)
+         {
+             if (collision.gameObject.CompareTag("Platform"))
+             {Debug.Log("I am OUT");
+                transform.parent = null; // Bağlantıyı kaldır
+             }
+         }
+
+         private void OnCollisionStay(Collision other)
+         {
+             if (other.gameObject.CompareTag("Platform"))
+             {
+                 Debug.Log("I am STAY");
+                 controller.Move(other.transform.position);
+             }
+         }
+         */
+        
+
         public void ResetToInitialState()
         {
             transform.position = initalPosition;
         }
+        
+        
     }
 }

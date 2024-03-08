@@ -22,16 +22,7 @@ public class PlayerFireBallMove : AgentModuleBase
           GameObject fireball = FireBallController.fireballs[i];
           if (fireBallSpeed != 0)
           {
-             // FireBallController.fireballs[i].transform.position += StartForWardVectors[i] * (fireBallSpeed * Time.deltaTime);
              fireball.transform.position += StartForWardVectors[i] * (fireBallSpeed * Time.deltaTime);
-            
-             // Mesafe kontrolü
-             float distance = Vector3.Distance(FireBallController.startPositions[fireball],fireball.transform.position);
-             if (distance > 80) 
-             {
-                 DestroyFireball(fireball, i);
-             }
-             
           }
           else
           {
@@ -42,11 +33,4 @@ public class PlayerFireBallMove : AgentModuleBase
   }
 
   
-  void DestroyFireball(GameObject fireball, int index)
-  {
-      Destroy(fireball); 
-      FireBallController.fireballs.RemoveAt(index); 
-      FireBallController.startPositions.Remove(fireball); 
-      PlayerFireBallMove.StartForWardVectors.RemoveAt(index); 
-  }
 }
