@@ -17,9 +17,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - HealthBarBase
+  - EaseBarBackGround
+  - EaseBarFill
   - 
   - 
   - 
@@ -46,4 +46,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: HealthBarBase
+    uniqueID: 1518575933
+    locked: 0
+  - name: EaseBarBackGround
+    uniqueID: 2908594497
+    locked: 0
+  - name: EaseBarFill
+    uniqueID: 843795783
     locked: 0

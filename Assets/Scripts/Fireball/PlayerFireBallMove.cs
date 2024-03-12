@@ -11,8 +11,6 @@ public class PlayerFireBallMove : AgentModuleBase
    
     public static List<Vector3> StartForWardVectors = new List<Vector3>();
     
-   
-  
     
   public override void Tick()
   {
@@ -31,6 +29,5 @@ public class PlayerFireBallMove : AgentModuleBase
           
       }
   }
-
   
 }
