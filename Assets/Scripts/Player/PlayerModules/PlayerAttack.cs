@@ -11,38 +11,19 @@ namespace Assets.Scripts.Player.PlayerModules
         public int attackCount = 0;
         public bool Attack;
         
-        
-
         public override IEnumerator IE_Initialize()
         {
             animator = GetComponent<Animator>();
             yield return null;
         }
-
         public override void Tick()
         {
-           /* if (Input.GetMouseButtonDown(0)&& !Attack )
-            {
-                Attack = true;
-                attackCount++; // Saldırı sayısını artır
-                if (attackCount % 3 == 0)
-                {
-                    
-                    animator.SetTrigger("SpecialFireBall");
-                }
-                else
-                {
-                    animator.SetTrigger("FireBall");
-                }
-            }*/
-
             Combo();
            
             if (Input.GetKeyDown(KeyCode.H))
             {
                 animator.SetTrigger("BlueFireBall");
             }
-            
         }
         public void Combo()
         {
@@ -51,9 +32,7 @@ namespace Assets.Scripts.Player.PlayerModules
                 Attack = true;
                 animator.SetTrigger(""+attackCount);
             }
-            
         }
-
         public void Start_Combo()
         {
             Attack = false;
@@ -61,9 +40,7 @@ namespace Assets.Scripts.Player.PlayerModules
             {
                 attackCount++;
             }
-            
         }
-
         public void Finish_Ani()
         {
             Attack = false;

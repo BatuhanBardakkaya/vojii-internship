@@ -5175,7 +5175,9 @@ MonoBehaviour:
   maxHealth: 100
   health: 0
   playerstats:
-    Damage: 0
+    FireBallDamage: 0
+    BlueFireBallDamage: 0
+    SpecialDamage: 0
 --- !u!1 &209543989
 GameObject:
   m_ObjectHideFlags: 0
@@ -26077,8 +26079,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99701ab43d17214093a1a0673b16b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Parent: {fileID: 1749571376}
-  fireBallSpeed: 5
+  Parent: {fileID: 0}
+  fireBallSpeed: 0
 --- !u!1 &2090506778
 GameObject:
   m_ObjectHideFlags: 0
@@ -26108,6 +26110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9179a0a6719d56c4b90855e0d9334f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemystatSo: {fileID: 11400000, guid: e0baaa27ae64c064885aee58b172fb2c, type: 2}
   playerstatsSo: {fileID: 11400000, guid: 3629f1b43df2a424b9b18f997bc07644, type: 2}
 --- !u!4 &2090506780
 Transform:

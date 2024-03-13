@@ -41,4 +41,4 @@ namespace Fireball
             obj.SetActive(false);
         }
     }
-    }
+}

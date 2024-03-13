@@ -1855,7 +1855,7 @@ GameObject:
   - component: {fileID: -7870598685633929264}
   m_Layer: 0
   m_Name: Latest
-  m_TagString: Untagged
+  m_TagString: Enemy_Skeleton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3032,8 +3032,6 @@ MonoBehaviour:
   EasehealthSlider: {fileID: 8921657087859748147}
   maxHealth: 100
   health: 0
-  playerstats:
-    Damage: 7
 --- !u!1 &8524406201349279900
 GameObject:
   m_ObjectHideFlags: 0

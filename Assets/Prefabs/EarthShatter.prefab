@@ -33373,6 +33373,7 @@ GameObject:
   - component: {fileID: 6140162409761630407}
   - component: {fileID: 3141724584386087691}
   - component: {fileID: 5677451599285473128}
+  - component: {fileID: 3637445848886981932}
   m_Layer: 0
   m_Name: EarthShatter
   m_TagString: SpecialFireBall
@@ -38326,3 +38327,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3637445848886981932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8653866445198889689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe099cb8cd3643769468e0778ad0defc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills: 2

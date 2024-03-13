@@ -10,70 +10,50 @@ public class EnemyBars : MonoBehaviour
       public Transform cam;
       public Slider healthSlider;
       public Slider EasehealthSlider;
-      public float maxHealth = 100f;
       public float health;
       private float lerpSpeed = .75f;
      
-  
-    
+      
       private void OnEnable()
       {
-          CoreGameSignals.OnEnemyTakeDamage += TakeDamage;
+          CoreGameSignals.OnFireballHit += TakeDamage;
+          CoreGameSignals.OnSpecialHit += TakeDamage;
       }
-  
       private void OnDisable()
       {
-          CoreGameSignals.OnEnemyTakeDamage -= TakeDamage;
+          CoreGameSignals.OnFireballHit -= TakeDamage;
+          CoreGameSignals.OnSpecialHit -= TakeDamage;
       }
-  
       private void Start()
       {
-          health = maxHealth;
-          healthSlider.maxValue = maxHealth;
-          healthSlider.value = maxHealth;
-          EasehealthSlider.maxValue = maxHealth;
-          EasehealthSlider.value = maxHealth;
+          health = GameManager.Instance.enemystatSo.EnemyStats.Health;
+          healthSlider.maxValue = health;
+          healthSlider.value = health;
+          EasehealthSlider.maxValue = health;
+          EasehealthSlider.value = health;
           
       }
-  
-      private void Update() //Enemy için ayrı yap
+      public void TakeDamage(GameObject enemy ,int damage)
       {
-             if (healthSlider.value != health)
+          GameObject rootParentGameObject = transform.root.gameObject;
+          
+          if (enemy == rootParentGameObject)
           {
+              health -= damage;
+              Debug.Log("Damage: " + damage + ", Health left: " + health);
+
               healthSlider.value = health;
-          }
 
-          if (Input.GetKeyDown(KeyCode.B))
-          {
-              int damage = GameManager.Instance.playerstatsSo.PlayerStats.FireBallDamage;
-              Debug.Log("Damage: "+damage);
-          }
-          
-         /* if (EasehealthSlider.value > health)
-          {
-              AnimateSliderValue(EasehealthSlider, health, lerpSpeed);
-          }*/
-          
-      }
-  
-     
-      public void TakeDamage(int damage)
-      {
-          damage = GameManager.Instance.playerstatsSo.PlayerStats.FireBallDamage;
-          health -= damage;
-          Debug.Log("Damage: "+damage);
-          // health değerini doğrudan kullanarak EasehealthSlider'ın değerini animasyonla güncelle
-          if (EasehealthSlider.value > health)
-          {
-              AnimateSliderValue(EasehealthSlider, health, lerpSpeed);
+              if (EasehealthSlider.value > health)
+              {
+                  AnimateSliderValue(EasehealthSlider, health, lerpSpeed);
+              }
           }
       }
-
-      // Slider'ınızın değerini hedef sağlık değerine yumuşak bir şekilde animasyonlu olarak değiştirme
       public void AnimateSliderValue(Slider easeHealthSlider, float targetHealth, float duration)
       {
           EasehealthSlider.DOValue(targetHealth, duration).SetEase(Ease.Linear);
-          //easeHealthSlider.DOKill(complete: true);
+          
       }
   
 }
