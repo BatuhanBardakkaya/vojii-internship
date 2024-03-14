@@ -43,10 +43,13 @@ namespace Assets.Scripts.Player.PlayerModules
 
         private Vector3 lastPlatformPosition;
         private Transform movingPlatform;
+        
+        
         public override IEnumerator IE_Initialize()
         {
             controller = GetComponent<CharacterController>();
             initalPosition = transform.position;
+            
             yield return null;
         }
 
@@ -218,6 +221,10 @@ namespace Assets.Scripts.Player.PlayerModules
          }
          */
         
+        public static void PlayerSpawned(Transform playerTransform)
+        {
+            
+        }
 
         public void ResetToInitialState()
         {

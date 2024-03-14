@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class EnemySpawner : AgentModuleBase
 {
-    public GameObject cubePrefab; 
-    public int numberOfCubes = 5; 
+    public GameObject Enemy1; 
+    public GameObject Enemy2; 
+    public int numberOfEachEnemies = 5; 
     public float _minX;
     public float _maxX;
     public float _maxY;
@@ -26,7 +27,7 @@ public class EnemySpawner : AgentModuleBase
         {
             trigered = true;
             Fight.Play();
-            for (int i = 0; i < numberOfCubes; i++)
+            for (int i = 0; i < numberOfEachEnemies; i++)
             {
                 Vector3 spawnPosition = new Vector3(
                     Random.Range(_minX, _maxX),
@@ -34,7 +35,8 @@ public class EnemySpawner : AgentModuleBase
                     Random.Range(-_minZ, -_maxZ) 
                 ) + transform.position; 
 
-                Instantiate(cubePrefab, spawnPosition, Quaternion.identity); 
+                Instantiate(Enemy1, spawnPosition, Quaternion.identity); 
+                Instantiate(Enemy2, spawnPosition, Quaternion.identity); 
             }
         }
         }

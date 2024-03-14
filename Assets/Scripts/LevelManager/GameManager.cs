@@ -34,4 +34,5 @@ public class GameManager : MonoBehaviour
     {
         return Resources.Load<PlayerStatsSO>("PlayerStats");
     }
+    
 }

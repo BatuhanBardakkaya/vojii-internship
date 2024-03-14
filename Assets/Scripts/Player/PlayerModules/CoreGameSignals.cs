@@ -11,6 +11,9 @@ namespace Assets.Scripts.Player.PlayerModules
         public static Action<GameObject, int> OnFireballHit;
 
         public static Action<GameObject, int> OnSpecialHit;
+        
+        public static Action<Transform> OnEnemySpawn;
+        
     }
     
 }
