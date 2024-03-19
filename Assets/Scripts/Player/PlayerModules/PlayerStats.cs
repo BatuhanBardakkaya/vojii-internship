@@ -6,6 +6,7 @@ namespace Assets.Scripts.Player.PlayerModules
     [Serializable]
     public class PlayerStats
     {
+        public int Health;
         public int FireBallDamage;
         public int BlueFireBallDamage;
         public int SpecialDamage;

@@ -49,7 +49,8 @@ namespace Assets.Scripts.Player.PlayerModules
         {
             controller = GetComponent<CharacterController>();
             initalPosition = transform.position;
-            
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             yield return null;
         }
 
@@ -61,7 +62,8 @@ namespace Assets.Scripts.Player.PlayerModules
             controller.Move(playerVelocity * Time.deltaTime);
             Vector3 move = GetMoveInput();
             Animate(move);
-            RotateTowardsCameraDirection(); // Bu satırı her karede çağırarak karakterin kamera ile dönüşünü senkronize eder
+            RotateTowardsCameraDirection(); 
+            
             base.Tick();
         }
 

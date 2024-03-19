@@ -7,12 +7,11 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class EnemyBars : MonoBehaviour
 {
-      public Transform cam;
       public Slider healthSlider;
       public Slider EasehealthSlider;
       public float health;
       private float lerpSpeed = .75f;
-     
+      
       
       private void OnEnable()
       {
@@ -26,7 +25,7 @@ public class EnemyBars : MonoBehaviour
       }
       private void Start()
       {
-          health = GameManager.Instance.enemystatSo.EnemyStats.Health;
+          health = GameManager.Instance.rogEnemystatSo.EnemyStats.Health;
           healthSlider.maxValue = health;
           healthSlider.value = health;
           EasehealthSlider.maxValue = health;
@@ -39,6 +38,7 @@ public class EnemyBars : MonoBehaviour
           
           if (enemy == rootParentGameObject)
           {
+              
               health -= damage;
               Debug.Log("Damage: " + damage + ", Health left: " + health);
 
@@ -47,6 +47,13 @@ public class EnemyBars : MonoBehaviour
               if (EasehealthSlider.value > health)
               {
                   AnimateSliderValue(EasehealthSlider, health, lerpSpeed);
+              }
+              
+              if (health <= 0)
+              {
+                  Destroy(rootParentGameObject); 
+                  ///////
+                  
               }
           }
       }

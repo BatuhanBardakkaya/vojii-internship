@@ -12,7 +12,6 @@ namespace Fireball
     }
     public class FireBallEvents : MonoBehaviour
     {
-
         public Skills skills;
         private int damage;
         private void Start()

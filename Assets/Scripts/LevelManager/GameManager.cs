@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using Assets.Scripts.Player.PlayerModules;
 using Firaball;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public EnemyStatsSo enemystatSo;
+    public EnemyStatsSo rogEnemystatSo;
+    
+    public EnemyStatsSo warEnemystatSo;
     
     public PlayerStatsSO playerstatsSo;
     private void Awake()
@@ -24,11 +27,17 @@ public class GameManager : MonoBehaviour
         }
 
         playerstatsSo = GetPlayerStat();
-        enemystatSo = GetEnemyStat();
+        rogEnemystatSo = GetRogEnemyStat();
+        warEnemystatSo = GetWarEnemyStatsSo();
     }
-    private EnemyStatsSo GetEnemyStat()
+    private EnemyStatsSo GetRogEnemyStat()
     {
-        return Resources.Load<EnemyStatsSo>("EnemyStats");
+        return Resources.Load<EnemyStatsSo>("RogueEnemyStats");
+    }
+
+    private EnemyStatsSo GetWarEnemyStatsSo()
+    {
+        return Resources.Load<EnemyStatsSo>("WarriorEnemyStats");
     }
     private PlayerStatsSO GetPlayerStat()
     {

@@ -8,13 +8,21 @@ using UnityEngine;
 
 public class EnemyDestroyer : AgentModuleBase
 {
-    public int health = 100;
-   
+    public int health;
+    private Animator _animator;
+
+    private void Start()
+    {
+        health = GameManager.Instance.rogEnemystatSo.EnemyStats.Health;
+        _animator = GetComponent<Animator>();
+    }
 
     public void OnEnable()
     {
         CoreGameSignals.OnFireballHit += TakeDamage;
         CoreGameSignals.OnSpecialHit += TakeDamage;
+        
+        
     }
 
     public void OnDisable()
@@ -23,15 +31,12 @@ public class EnemyDestroyer : AgentModuleBase
         CoreGameSignals.OnSpecialHit -= TakeDamage;
     }
     
-    public void TakeDamage(GameObject enemy,int damage)// burası olmayacak aslında
-    {
+    public void TakeDamage(GameObject enemy,int damage)
+    {   
         if (enemy == this.gameObject)
         { 
-         health -= damage;
-            if (health <= 0)
-            {
-                Destroy(this.gameObject); 
-            }
+            _animator.SetTrigger("GetHit");   
+            
         }
     }
 }

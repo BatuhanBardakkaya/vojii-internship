@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Agent.AgentModule;
 using Assets.Scripts.Player.PlayerModules;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Slider = UnityEngine.UI.Slider;
@@ -13,71 +14,47 @@ public class PlayerBars : AgentModuleBase
     public Slider EasehealthSlider;
     public float maxHealth = 100f;
     public float health;
-    private float lerpSpeed = 0.01f;
-    public override IEnumerator IE_Initialize()
-    {
-        
-        return base.IE_Initialize();
-    }
+    private float lerpSpeed = 0.75f;
 
-    public PlayerStats playerstats;
-  /*  private void OnEnable()
+    
+    private void OnEnable()
     {
-        CoreGameSignals.OnEnemyTakeDamage += TakeDamage;
+        CoreGameSignals.OnPlayerTakeDamage += TakeDamage;
     }
 
     private void OnDisable()
     {
-        CoreGameSignals.OnEnemyTakeDamage -= TakeDamage;
+        CoreGameSignals.OnPlayerTakeDamage -= TakeDamage;
     }
-*/
+
     private void Start()
     {
-        health = maxHealth;
+        health = GameManager.Instance.playerstatsSo.PlayerStats.Health;
+        healthSlider.maxValue = health;
+        healthSlider.value = health;
+        EasehealthSlider.maxValue = health;
+        EasehealthSlider.value = health;
+        Debug.Log("Player Bars Health:"+health);
         
     }
-
-    private void Update() //Enemy için ayrı yap
+    
+    public void TakeDamage(GameObject enemy ,int damage)
     {
-        if (healthSlider.value != health)
-        {
-            healthSlider.value = health;
-        }
+            health -= damage;
+           // Debug.Log("Damage: " + damage + ", Health left: " + health);
 
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            //TakeDamage(20);
-            
-        }
-        if (healthSlider.value != EasehealthSlider.value)
-        {
-            EasehealthSlider.value = Mathf.Lerp(EasehealthSlider.value, health, lerpSpeed);
-        }
+            healthSlider.value = health;
+
+            if (EasehealthSlider.value > health)
+            {
+                AnimateSliderValue(EasehealthSlider, health, lerpSpeed);
+            }
         
     }
-
-    /*public override void Tick()
+    public void AnimateSliderValue(Slider easeHealthSlider, float targetHealth, float duration)
     {
-        if (healthSlider.value != health)
-        {
-            healthSlider.value = health;
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            takedamage(20);
-            Debug.Log("j ye bastık"+health);
-        }
-        
-        base.Tick();
-    }*/
-
-   
-    public void TakeDamage(int damage)
-    {
-        
-       // damage = playerstats.Damage;
-        health -= damage;
+        EasehealthSlider.DOValue(targetHealth, duration).SetEase(Ease.Linear);
+          
     }
     
 }

@@ -10,6 +10,8 @@ TagManager:
   - Fireball
   - Enemy_Skeleton
   - SpecialFireBall
+  - FireBallPool
+  - Enemy_GreenFireBall
   layers:
   - Default
   - TransparentFX

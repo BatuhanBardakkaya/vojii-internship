@@ -7,5 +7,7 @@ namespace Firaball
     {
         public int Health;
         public int Damage;
+        public float CooldDown;
+        public float AttackDistance;
     }
 }
