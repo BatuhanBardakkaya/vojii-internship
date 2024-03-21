@@ -6,7 +6,6 @@ namespace Assets.Scripts.Player.PlayerModules
 {
     public static class CoreGameSignals
     {
-        public static Action<int> OnEnemyTakeDamage;
 
         public static Action<GameObject, int> OnFireballHit;
 
@@ -16,7 +15,12 @@ namespace Assets.Scripts.Player.PlayerModules
 
         public static Action HitTaked;
         
+        public static Action OnDashUsed;
+
+        public static Action OnGlideUsed;
+        
         public static Action<Transform> OnEnemySpawn;
+        
         
         
         

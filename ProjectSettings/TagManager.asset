@@ -12,6 +12,8 @@ TagManager:
   - SpecialFireBall
   - FireBallPool
   - Enemy_GreenFireBall
+  - DashTrail
+  - GlideTrail
   layers:
   - Default
   - TransparentFX

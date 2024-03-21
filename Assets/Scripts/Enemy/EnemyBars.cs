@@ -52,7 +52,7 @@ public class EnemyBars : MonoBehaviour
               if (health <= 0)
               {
                   Destroy(rootParentGameObject); 
-                  ///////
+                  EnemyGameSignals.OnEnemyKilled?.Invoke();
                   
               }
           }

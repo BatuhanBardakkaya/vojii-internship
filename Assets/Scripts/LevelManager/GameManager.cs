@@ -5,6 +5,7 @@ using Assets.Scripts.Player.PlayerModules;
 using Firaball;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public EnemyStatsSo warEnemystatSo;
     
     public PlayerStatsSO playerstatsSo;
+    
     private void Awake()
     {
         if (Instance == null)
@@ -29,7 +31,10 @@ public class GameManager : MonoBehaviour
         playerstatsSo = GetPlayerStat();
         rogEnemystatSo = GetRogEnemyStat();
         warEnemystatSo = GetWarEnemyStatsSo();
+        
+        
     }
+   
     private EnemyStatsSo GetRogEnemyStat()
     {
         return Resources.Load<EnemyStatsSo>("RogueEnemyStats");

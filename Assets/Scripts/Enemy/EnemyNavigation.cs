@@ -16,20 +16,15 @@ public class EnemyNavigation : MonoBehaviour
     private NavMeshAgent agent;
     private Animator _animator;
     private float time;
-
     public Enemies Enemies;
 
     [SerializeField] private Transform playerTransform;
-
-    //[SerializeField] private float RangeattackDistance = 20.0f;
-    // Oyuncunun Transformunu saklamak için
-
+    
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-
-        // Player'ı bul (Örneğin, tüm player objeleri "Player" tag'ine sahipse)
+        
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
         switch (Enemies)
@@ -62,8 +57,8 @@ public class EnemyNavigation : MonoBehaviour
         }
 
         void Update()
-        {
-            
+        {   
+           
             if (playerTransform != null)
             {
                 float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
@@ -71,12 +66,16 @@ public class EnemyNavigation : MonoBehaviour
                 switch (Enemies)
                 {
                     case Enemies.Rogue:
+                        
                         if (distanceToPlayer <= GameManager.Instance.rogEnemystatSo.EnemyStats.AttackDistance)
                         {
                             agent.SetDestination(transform.position);
                             time += Time.deltaTime;
                             if (time >= GameManager.Instance.rogEnemystatSo.EnemyStats.CooldDown)
                             {
+
+                                agent.radius = Mathf.Lerp(agent.radius, 5f, Time.deltaTime*50);
+                                    
                                 time = 0;
                                 _animator.SetTrigger("RangeAttack");
                             }
@@ -98,6 +97,7 @@ public class EnemyNavigation : MonoBehaviour
                             time += Time.deltaTime;
                             if (time >= GameManager.Instance.warEnemystatSo.EnemyStats.CooldDown)
                             {
+                                agent.radius = Mathf.Lerp(agent.radius, 1.5f, Time.deltaTime*25); 
                                 time = 0;
                                 _animator.SetTrigger("Attack");
                             }
@@ -120,4 +120,5 @@ public class EnemyNavigation : MonoBehaviour
             }
         }
     }
+
 

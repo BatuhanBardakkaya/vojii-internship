@@ -26,7 +26,10 @@ public class EnemySpawner : AgentModuleBase
         if (other.CompareTag("Player"))
         {
             trigered = true;
-            Fight.Play();
+            //Fight.Play();
+            EnemyGameSignals.OnEnemyAreaEntered?.Invoke(true);
+            int totalenemies = numberOfEachEnemies * 2;
+            EnemyGameSignals.OnEnemiesSpawned?.Invoke(totalenemies);
             for (int i = 0; i < numberOfEachEnemies; i++)
             {
                 Vector3 spawnPosition = new Vector3(
@@ -37,6 +40,7 @@ public class EnemySpawner : AgentModuleBase
 
                 Instantiate(Enemy1, spawnPosition, Quaternion.identity); 
                 Instantiate(Enemy2, spawnPosition, Quaternion.identity); 
+               
             }
         }
         }
