@@ -51,18 +51,22 @@ namespace Assets.Scripts.Player.PlayerModules
         private int currentJumpCount;
         private Vector3 initialPosition;
 
+        
+
         private void Start()
         {
             controller = GetComponent<CharacterController>();
             initialPosition = transform.position;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.Locked;
             dashCooldownTimeLeft = 0;
             glideCooldownTimeLeft = 0;
             
             dashTrailParticleSystem = GameObject.FindGameObjectWithTag("DashTrail").GetComponent<ParticleSystem>();
             GlideTrailParticleSystem = GameObject.FindGameObjectWithTag("GlideTrail").GetComponent<ParticleSystem>();
             DOTween.Init();
+            
+            
         }
 
         public override void Tick()
@@ -84,7 +88,7 @@ namespace Assets.Scripts.Player.PlayerModules
                RotateTowardsCameraDirection();
            }
 
-           // Soğuma zamanını güncelle
+           
            if (dashCooldownTimeLeft > 0)
            {
                dashCooldownTimeLeft -= Time.deltaTime;
@@ -93,6 +97,7 @@ namespace Assets.Scripts.Player.PlayerModules
            {
                glideCooldownTimeLeft -= Time.deltaTime;
            }
+           
            
            
             base.Tick();

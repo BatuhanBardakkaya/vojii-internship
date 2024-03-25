@@ -32,7 +32,7 @@ namespace Assets.Scripts.Particules
         {
             base.Tick();
            
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.B))
             {
                 StartAndStopAllParticleSystems();
             }

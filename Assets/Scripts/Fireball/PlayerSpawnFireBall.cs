@@ -4,6 +4,7 @@ using Assets.Scripts.Agent.AgentModule;
 using Fireball;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class PlayerSpawnFireBall : AgentModuleBase
 {

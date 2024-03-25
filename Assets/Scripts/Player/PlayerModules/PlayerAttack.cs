@@ -1,6 +1,7 @@
 using System.Collections;
 using Assets.Scripts.Agent.AgentModule;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Player.PlayerModules
 {
@@ -20,14 +21,14 @@ namespace Assets.Scripts.Player.PlayerModules
         {
             Combo();
            
-            if (Input.GetKeyDown(KeyCode.H))
+            if (Input.GetKeyDown(KeyCode.H) && !IsPointerOverUI())
             {
                 animator.SetTrigger("BlueFireBall");
             }
         }
         public void Combo()
         {
-            if (Input.GetMouseButtonDown(0)&& !Attack)
+            if (Input.GetMouseButtonDown(0)&& !Attack && !IsPointerOverUI())
             {
                 Attack = true;
                 animator.SetTrigger(""+attackCount);
@@ -45,6 +46,12 @@ namespace Assets.Scripts.Player.PlayerModules
         {
             Attack = false;
             attackCount = 0;
+        }
+        
+        
+        bool IsPointerOverUI()
+        {
+            return EventSystem.current.IsPointerOverGameObject();
         }
         
     }

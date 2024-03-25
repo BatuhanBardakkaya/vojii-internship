@@ -20,12 +20,14 @@ namespace Assets.Scripts.Player.PlayerModules
         public static Action OnGlideUsed;
         
         public static Action<Transform> OnEnemySpawn;
-        
-        
-        
-        
-        
-        
+
+        public static Action<int> OnHealthPotionUsed;
+
+
+
+
+
+
     }
     
 }

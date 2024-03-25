@@ -14,6 +14,8 @@ TagManager:
   - Enemy_GreenFireBall
   - DashTrail
   - GlideTrail
+  - Inventory
+  - Deneme
   layers:
   - Default
   - TransparentFX
@@ -24,7 +26,7 @@ TagManager:
   - HealthBarBase
   - EaseBarBackGround
   - EaseBarFill
-  - 
+  - Interactable
   - 
   - 
   - 
