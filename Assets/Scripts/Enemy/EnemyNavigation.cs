@@ -39,7 +39,7 @@ public class EnemyNavigation : MonoBehaviour
         }
     }
 
-    void OnEnable()
+        void OnEnable()
         {
             // Oyuncu spawn olduğunda çalışacak metod
             CoreGameSignals.OnEnemySpawn += OnEnemySpawned;

@@ -18,24 +18,19 @@ public class InventoryItemController : MonoBehaviour
 
     public void AddItem(Item newItem)
     {
-        if (newItem == null)
+       /* if (newItem == null)
         {
             Debug.LogError("Yeni eklenen item null.");
             return;
-        }
-
+        }*/
+    
         item = newItem;
         
     }
 
     public void UseItem()
     {
-       /*if (item == null)
-        {
-            Debug.LogError("UseItem çağrıldı fakat item null.");
-            return;
-        }*/
-
+        
         switch (item.itemType)
         {
             case Item.ItemType.HealthPotion:

@@ -8,12 +8,12 @@ using UnityEngine;
 
 public class EnemyDestroyer : AgentModuleBase
 {
-    public int health;
+   
     private Animator _animator;
 
     private void Start()
     {
-        health = GameManager.Instance.rogEnemystatSo.EnemyStats.Health;
+        
         _animator = GetComponent<Animator>();
     }
 
@@ -33,8 +33,10 @@ public class EnemyDestroyer : AgentModuleBase
     
     public void TakeDamage(GameObject enemy,int damage)
     {   
+        
         if (enemy == this.gameObject)
         { 
+            
             _animator.SetTrigger("GetHit");   
             
         }

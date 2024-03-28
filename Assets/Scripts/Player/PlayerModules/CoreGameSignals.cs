@@ -23,6 +23,8 @@ namespace Assets.Scripts.Player.PlayerModules
 
         public static Action<int> OnHealthPotionUsed;
 
+        public static Action<float> OnGetExperiance;
+
 
 
 

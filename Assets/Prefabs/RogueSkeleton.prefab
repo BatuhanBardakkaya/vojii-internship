@@ -182,6 +182,14 @@ MonoBehaviour:
   healthSlider: {fileID: 840429196260138578}
   EasehealthSlider: {fileID: 3825706659332183357}
   health: 0
+  experience: 0
+  Enemies: 0
+  lootTable:
+    list:
+    - item: {fileID: 520155108706801336, guid: a942d237a6a85d8469d13476c0ffc3b9, type: 3}
+      weight: 6
+    - item: {fileID: 7990141450358191712, guid: 8b1025477aa82ea46bb7c122f7dfada8, type: 3}
+      weight: 0
 --- !u!114 &318257722284002635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,7 +947,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Parent: {fileID: 0}
-  health: 100
 --- !u!114 &8683990655711713515
 MonoBehaviour:
   m_ObjectHideFlags: 0

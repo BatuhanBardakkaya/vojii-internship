@@ -5,44 +5,51 @@ using UnityEngine;
 
 public class EnemySpawner : AgentModuleBase
 {
-    public GameObject Enemy1; 
-    public GameObject Enemy2; 
     public int numberOfEachEnemies = 5; 
-    public float _minX;
-    public float _maxX;
-    public float _maxY;
-    public float _minY;
-    public float _minZ;
-    public float _maxZ;
-    public AudioSource Fight;
-    private bool trigered = false;
+    public GameObject spawnCenter; // Enemy'lerin etrafında spawn olacağı GameObject
+    public float spawnRadius = 10f; // Spawn center etrafındaki maksimum mesafe
+    public EnemyPool enemyPool; // EnemyPool referansı
+    private bool triggered = false;
     
-
     private void OnTriggerEnter(Collider other)
     {
-        //Fight.GetComponent<AudioSource>();
-        if (trigered != true)
+        if (!triggered && other.CompareTag("Player"))
         {
-        if (other.CompareTag("Player"))
-        {
-            trigered = true;
+            triggered = true;
             //Fight.Play();
-            EnemyGameSignals.OnEnemyAreaEntered?.Invoke(true);
-            int totalenemies = numberOfEachEnemies * 2;
-            EnemyGameSignals.OnEnemiesSpawned?.Invoke(totalenemies);
+            int totalEnemies = numberOfEachEnemies * 2;
+
             for (int i = 0; i < numberOfEachEnemies; i++)
             {
-                Vector3 spawnPosition = new Vector3(
-                    Random.Range(_minX, _maxX),
-                    Random.Range(_minY, _maxY),
-                    Random.Range(-_minZ, -_maxZ) 
-                ) + transform.position; 
+                Vector3 spawnPosition1 = RandomPositionAroundCenter();
+                Vector3 spawnPosition2 = RandomPositionAroundCenter();
 
-                Instantiate(Enemy1, spawnPosition, Quaternion.identity); 
-                Instantiate(Enemy2, spawnPosition, Quaternion.identity); 
-               
+                // Enemy1 ve Enemy2'yi pool'dan çek
+                GameObject enemy1 = enemyPool.GetPooledEnemy(0); // 0, Enemy1 tipini belirtir
+                GameObject enemy2 = enemyPool.GetPooledEnemy(1); // 1, Enemy2 tipini belirtir
+                
+                if (enemy1 != null)
+                {
+                    enemy1.transform.position = spawnPosition1;
+                    enemy1.transform.rotation = Quaternion.identity;
+                    enemy1.SetActive(true); // Enemy'yi aktifleştir
+                }
+
+                if (enemy2 != null)
+                {
+                    enemy2.transform.position = spawnPosition2;
+                    enemy2.transform.rotation = Quaternion.identity;
+                    enemy2.SetActive(true); // Enemy'yi aktifleştir
+                }
             }
         }
-        }
+    }
+
+    Vector3 RandomPositionAroundCenter()
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * spawnRadius;
+        randomDirection += spawnCenter.transform.position;
+        randomDirection.y = spawnCenter.transform.position.y; // Yüksekliği sabit tutmak istiyorsanız
+        return randomDirection;
     }
 }

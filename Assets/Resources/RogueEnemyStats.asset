@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: RogueEnemyStats
   m_EditorClassIdentifier: 
   EnemyStats:
-    Health: 100
-    Damage: 1
+    Health: 1
+    Damage: 20
     CooldDown: 2
     AttackDistance: 20
+    Experiance: 15

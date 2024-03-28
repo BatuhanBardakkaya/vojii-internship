@@ -40,7 +40,6 @@ public class FireBallPool : MonoBehaviour
         }
         
         GameObject obj = pools[objectType].pooledObjects.Dequeue();
-        //obj.SetActive(true);
         pools[objectType].pooledObjects.Enqueue(obj);
         return obj;
         

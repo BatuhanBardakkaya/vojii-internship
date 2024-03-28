@@ -9,5 +9,6 @@ namespace Firaball
         public int Damage;
         public float CooldDown;
         public float AttackDistance;
+        public float Experiance;
     }
 }

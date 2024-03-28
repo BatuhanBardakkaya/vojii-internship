@@ -1,3 +1,4 @@
+using System.Collections;
 using Assets.Scripts.Player.PlayerModules;
 using UnityEngine;
 
@@ -9,16 +10,29 @@ namespace Inventory
         [SerializeField] private string _prompt;
 
         public string InteractionPrompt => _prompt;
-        void Pickup()
+        IEnumerator Pickup()
         {
-            InventoryManager.Instance.Add(Item);
+            
+            if (InventoryManager.Instance.isInventoryOpen )
+            {
+                InventoryManager.Instance.ClearList();
+                yield return new WaitForSeconds(0.1f);
+                InventoryManager.Instance.Add(Item);
+                InventoryManager.Instance.ListItems();
+            }
+            else
+            {
+                InventoryManager.Instance.Add(Item);
+            }
+            
             Destroy(gameObject);
 
         }
         
         public bool Interact(Interactor interactor)
         {
-            Pickup();
+            StartCoroutine(Pickup());
+            //Pickup();
             return true;
         }
     }

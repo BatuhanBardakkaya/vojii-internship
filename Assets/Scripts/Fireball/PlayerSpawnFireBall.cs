@@ -8,22 +8,11 @@ using UnityEngine.EventSystems;
 
 public class PlayerSpawnFireBall : AgentModuleBase
 {
-   // public GameObject firePoint;
-    //public List<GameObject> frball = new List<GameObject>();
-    //public GameObject fireBallController;
-    //public GameObject specialFireballPrefab; 
-    
-    
-    //public float fireRate = 0.5f; // Ateş etme hızı (saniye cinsinden)
     
     public GameObject Player;
     private Animator anim;
-    //public GameObject FireBallPrefab;
     public FireBallPool fireBallPool;
     
-   // public PlayerSpawnSpecialFire specialFireSpawner;
-
-
     public override IEnumerator IE_Initialize()
     {
 
@@ -42,14 +31,14 @@ public class PlayerSpawnFireBall : AgentModuleBase
               Vector3 targetPosition = fireball.transform.position + Player.transform.forward * 40; 
               fireball.transform.DOMove(targetPosition, 2.5f)
                   .SetEase(Ease.Linear).OnComplete(() =>
-                          fireball.SetActive(false) // Kullanım bittikten sonra ateş topunu havuza geri koy
+                          fireball.SetActive(false) 
                   );
           }
     }
 
     void SpawnBlueFireBall()
     {
-        GameObject fireball = fireBallPool.GetPooledObject(1); // 1, mavi ateş topunu temsil ediyor
+        GameObject fireball = fireBallPool.GetPooledObject(1); 
         if (fireball != null)
         {
             Vector3 spawnPosition = Player.transform.position + Player.transform.forward + new Vector3(0, 1, 0);

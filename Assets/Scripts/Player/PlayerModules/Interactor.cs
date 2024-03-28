@@ -49,21 +49,6 @@ namespace Assets.Scripts.Player.PlayerModules
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(_interactionpoint.position,_interactionPointRadius);
         }
-        /*private void Update()
-        {
-            _numFound = Physics.OverlapSphereNonAlloc(_interactionpoint.position, _interactionPointRadius, _colliders,
-                _interactableMask);
-
-            if (_numFound>0)
-            {
-                Debug.Log("NUmfound" + _numFound);
-                var _interactable = _colliders[0].GetComponent<IInteractable>();
-                if (_interactable != null && UnityEngine.Input.GetKeyDown(KeyCode.E)) 
-                {
-                    Debug.Log("AAA");
-                    _interactable.Interact(this);
-                }
-            }
-        }*/
+        
     }
 }

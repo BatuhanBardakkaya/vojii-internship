@@ -5,12 +5,17 @@ using Assets.Scripts.Player.PlayerModules;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+
+
 public class EnemyBars : MonoBehaviour
 {
       public Slider healthSlider;
       public Slider EasehealthSlider;
       public float health;
+      public float experience;
       private float lerpSpeed = .75f;
+      public Enemies Enemies;
+      public EnemyLootbag<Transform> lootTable;
       
       
       private void OnEnable()
@@ -25,23 +30,39 @@ public class EnemyBars : MonoBehaviour
       }
       private void Start()
       {
-          health = GameManager.Instance.rogEnemystatSo.EnemyStats.Health;
-          healthSlider.maxValue = health;
-          healthSlider.value = health;
-          EasehealthSlider.maxValue = health;
-          EasehealthSlider.value = health;
+          switch (Enemies)
+          {
+              case Enemies.Rogue:
+                  health = GameManager.Instance.rogEnemystatSo.EnemyStats.Health;
+                  experience = GameManager.Instance.rogEnemystatSo.EnemyStats.Experiance;
+                  healthSlider.maxValue = health;
+                  healthSlider.value = health;
+                  EasehealthSlider.maxValue = health;
+                  EasehealthSlider.value = health;
+                  Debug.Log("Rog Enemy"+ health);
+                  Debug.Log("Rog experience"+ experience);
+                  break;
+              case Enemies.Warrior:
+                  health = GameManager.Instance.warEnemystatSo.EnemyStats.Health;
+                  experience = GameManager.Instance.warEnemystatSo.EnemyStats.Experiance;
+                  healthSlider.maxValue = health;
+                  healthSlider.value = health;
+                  EasehealthSlider.maxValue = health;
+                  EasehealthSlider.value = health;
+                  Debug.Log("War Enemy:"+ health);
+                  Debug.Log("War experience:"+ experience);
+                  break;
+          }
+          
           
       }
       public void TakeDamage(GameObject enemy ,int damage)
       {
-          GameObject rootParentGameObject = transform.root.gameObject;
+          GameObject rootParentGameObject = transform.parent.parent.gameObject;
           
           if (enemy == rootParentGameObject)
           {
-              
               health -= damage;
-              Debug.Log("Damage: " + damage + ", Health left: " + health);
-
               healthSlider.value = health;
 
               if (EasehealthSlider.value > health)
@@ -51,7 +72,9 @@ public class EnemyBars : MonoBehaviour
               
               if (health <= 0)
               {
-                  Destroy(rootParentGameObject); 
+                  SpawnLoot();
+                  rootParentGameObject.SetActive(false);
+                  CoreGameSignals.OnGetExperiance?.Invoke(experience);
                   EnemyGameSignals.OnEnemyKilled?.Invoke();
                   
               }
@@ -61,6 +84,14 @@ public class EnemyBars : MonoBehaviour
       {
           EasehealthSlider.DOValue(targetHealth, duration).SetEase(Ease.Linear);
           
+      }
+      void SpawnLoot()
+      {
+          if (lootTable != null)
+          {
+              Transform lootItem = lootTable.GetRandom(); 
+              Instantiate(lootItem, transform.position, Quaternion.identity); // Düşmanın konumunda öğeyi yarat
+          }
       }
   
 }

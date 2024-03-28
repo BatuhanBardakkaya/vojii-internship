@@ -10,6 +10,7 @@ namespace Inventory
     {
         public static InventoryManager Instance;
         public List<Item> Items = new List<Item>();
+        
         public Transform ItemContent;
         
         public GameObject InventoryItem;
@@ -19,28 +20,40 @@ namespace Inventory
         public Toggle EnableRemove;
 
         public InventoryItemController[] InventoryItems;
+        
+        public List<GameObject> children = new List<GameObject>();
 
+        public bool isInventoryOpen;
         private void Awake()
         {
             Instance = this;
-            //Inventory = GameObject.FindGameObjectWithTag("Deneme");
+            
         }
 
         private void Update()
         {
+            
             if (Input.GetKeyDown(KeyCode.I))
             {
-                //Inventory = GameObject.FindWithTag("Deneme");
-               
-                if (Inventory != null)
+                isInventoryOpen = !isInventoryOpen;
+                if (isInventoryOpen )
                 {
-                    ListItems();
-                    Inventory.SetActive(true);
+                    if (Inventory != null)
+                    {
+                        ListItems();
+                        Inventory.SetActive(true);
+                    }
+                    else
+                    {
+                        Debug.LogError("Yok.");
+                    }
                 }
                 else
                 {
-                    Debug.LogError("Yok.");
+                    ClearList();
+                    Inventory.SetActive(false);
                 }
+                
             }
         }
 
@@ -55,19 +68,16 @@ namespace Inventory
             Items.Remove(item);
         }
 
+        public void ClearList()
+        {
+            foreach (Transform item in ItemContent)
+            {
+                Destroy(item.gameObject);
+            }
+        }
+
         public void ListItems()
         {
-            List<GameObject> children = new List<GameObject>();
-            foreach (Transform child in ItemContent)
-            {
-                children.Add(child.gameObject);
-            }
-
-            // Geçici listedeki her bir objeyi yok et
-            foreach (GameObject child in children)
-            {
-                Destroy(child);
-            }
             foreach (var item in Items)
             {
                 GameObject obj = Instantiate(InventoryItem, ItemContent);
@@ -75,14 +85,14 @@ namespace Inventory
                 var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
                 var DeleteButton = obj.transform.Find("DeleteItem").GetComponent<Button>();
                 
+                
                 itemName.text = item.itemName;
                 itemIcon.sprite = item.icon;
 
-                if (EnableRemove.isOn)
+               if (EnableRemove.isOn)
                 {
                     DeleteButton.gameObject.SetActive(true);
                 }
-                
             }
             SetInventoryItems();
         }
@@ -108,17 +118,13 @@ namespace Inventory
 
         public void SetInventoryItems()
         {
-            InventoryItems = ItemContent.GetComponentsInChildren<InventoryItemController>();
+           InventoryItems = ItemContent.GetComponentsInChildren<InventoryItemController>();
 
-            // En küçük boyutu hesapla
-            //int count = Mathf.Min(Items.Count, InventoryItems.Length);
-
-            for (int i = 0; i < Items.Count; i++)
-            {
-                InventoryItems[i].AddItem(Items[i]);
-            }
+           for (int i = 0; i < Items.Count; i++)
+           {
+               InventoryItems[i].AddItem(Items[i]);
+           }
+           
         }
-        
-        
     }
 }

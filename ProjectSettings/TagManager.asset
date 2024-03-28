@@ -16,6 +16,7 @@ TagManager:
   - GlideTrail
   - Inventory
   - Deneme
+  - Levelup
   layers:
   - Default
   - TransparentFX
