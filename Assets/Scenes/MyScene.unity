@@ -5280,6 +5280,8 @@ MonoBehaviour:
   Inventory: {fileID: 451067201}
   EnableRemove: {fileID: 1536339696}
   InventoryItems: []
+  children: []
+  isInventoryOpen: 0
 --- !u!4 &132037204
 Transform:
   m_ObjectHideFlags: 0
@@ -17721,7 +17723,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 568641119}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16018222, y: -0.000000025470568, z: 0.0000000041333035, w: 0.9870875}
+  m_LocalRotation: {x: 0.16018222, y: 0.000000025470568, z: -0.0000000041333035, w: 0.9870875}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21458,7 +21460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7352436545434290426, guid: bebeaeafed2eed14288a64c1b9776e89, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0036846865
+      value: 0.0036999756
       objectReference: {fileID: 0}
     - target: {fileID: 7352436545434290426, guid: bebeaeafed2eed14288a64c1b9776e89, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38345,6 +38347,7 @@ MonoBehaviour:
   rogEnemystatSo: {fileID: 11400000, guid: e0baaa27ae64c064885aee58b172fb2c, type: 2}
   warEnemystatSo: {fileID: 11400000, guid: 4b9ccba7ee7308e4a8058210518dd2d6, type: 2}
   playerstatsSo: {fileID: 11400000, guid: 3629f1b43df2a424b9b18f997bc07644, type: 2}
+  bosEnemyStatsSo: {fileID: 0}
 --- !u!4 &2090506780
 Transform:
   m_ObjectHideFlags: 0

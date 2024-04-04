@@ -12,18 +12,23 @@ public class InventoryItemController : MonoBehaviour
 
     public void RemoveItem()
     {
-        InventoryManager.Instance.Remove(item);
-        Destroy(gameObject);
+        if (item.amount > 1)
+        {
+            
+            item.amount -= 1;
+            
+        }
+        else
+        {
+            
+            InventoryManager.Instance.Remove(item);
+            Destroy(gameObject);
+        }
+        
     }
 
     public void AddItem(Item newItem)
     {
-       /* if (newItem == null)
-        {
-            Debug.LogError("Yeni eklenen item null.");
-            return;
-        }*/
-    
         item = newItem;
         
     }
@@ -36,8 +41,10 @@ public class InventoryItemController : MonoBehaviour
             case Item.ItemType.HealthPotion:
                 CoreGameSignals.OnHealthPotionUsed?.Invoke(item.value);
                 break;
-        }  
+        }
+
         RemoveItem();
+        CoreGameSignals.OnItemUsed?.Invoke();
         
     }
 }

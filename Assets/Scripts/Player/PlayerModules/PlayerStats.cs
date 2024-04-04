@@ -10,5 +10,6 @@ namespace Assets.Scripts.Player.PlayerModules
         public int FireBallDamage;
         public int BlueFireBallDamage;
         public int SpecialDamage;
+        public int SuperDeathDamage;
     }
 }

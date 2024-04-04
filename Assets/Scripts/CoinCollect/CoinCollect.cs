@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +15,8 @@ public class CoinCollect : MonoBehaviour, IResettable
         startPosition = transform.position;
         collectSound = GameObject.Find("CollectSound").GetComponent<AudioSource>();
     }
-
-    private void OnTriggerEnter(Collider other)
+    
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player"))
         {

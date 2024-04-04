@@ -1,71 +1,176 @@
 using System;
+using System.Collections;
 using System.Diagnostics;
+using Assets.Scripts.Agent.AgentModule;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public enum PlayerSkills
-{
-    Dash,
-    Glide
-}
+using Debug = UnityEngine.Debug;
+
 
 namespace Assets.Scripts.Player.PlayerModules
 {
-    public class PlayerSkill : MonoBehaviour
+    public class PlayerSkill : AgentModuleBase
     {
-        public PlayerSkills playerskills;
-        private Tweener filltween;
-        public Image Dash;
-        public Image Glide;
-        public TextMeshProUGUI Dash_Text;
+        public static event Action<bool> OnShieldStateChange;
         
-        public float timer;
+        private ParticleSystem SuperDParticleSystem;
+        private ParticleSystem ShieldParticleSystem;
 
- 
-        private void OnEnable()
+        private float SuperDCooldownTimeLeft;
+        private float ShieldCooldownTimeLeft;
+
+        [SerializeField] private float SuperDCooldown = 7f;
+        [SerializeField] private float ShieldCooldown = 10f;
+
+        private bool isSuperD;
+        private bool isShield;
+
+        [SerializeField] private float ShieldDuration = 2f;
+        private float ShieldTimeLeft;
+        
+        [SerializeField] private float SuperDDuration = .25f;
+        private float SuperDTimeLeft;
+
+        
+        public override IEnumerator IE_Initialize()
         {
-            CoreGameSignals.OnDashUsed += StartTimer;
-            //CoreGameSignals.OnGlideUsed += StartTimer;
+            SuperDParticleSystem = GameObject.FindGameObjectWithTag("SuperD").GetComponent<ParticleSystem>();
+            ShieldParticleSystem = GameObject.FindGameObjectWithTag("Shield").GetComponent<ParticleSystem>();
+
+            SuperDParticleSystem.gameObject.SetActive(false);
+            ShieldParticleSystem.gameObject.SetActive(false);
+            SuperDCooldownTimeLeft = 0;
+            ShieldCooldownTimeLeft = 0;
+
+
+            yield return null;
         }
 
-        private void OnDisable()
+        public override void Tick()
         {
-            CoreGameSignals.OnDashUsed -= StartTimer;
-           // CoreGameSignals.OnGlideUsed -= StartTimer;
-        }
-        
-        private void StartTimer()
-        {
-            Image FillAmout;
-            switch (playerskills)
+            UpdateShield();
+            UpdateSuperD();
+            if (SuperDCooldownTimeLeft > 0)
             {
-                case PlayerSkills.Dash:
-                    FillAmout = Dash;
-                    break;
-                case PlayerSkills.Glide:
-                    FillAmout = Glide;
-                    break;
+                SuperDCooldownTimeLeft -= Time.deltaTime;
             }
-            Dash.fillAmount = 1f;
-            Dash_Text.gameObject.SetActive(true);
-            
-            filltween = DOTween.To(() => Dash.fillAmount, x => Dash.fillAmount = x, 0f, timer)
-                .SetEase(Ease.Linear)
-                .OnUpdate(UpdateTimerText)
-                .OnComplete(FillComplete);
 
+            if (ShieldCooldownTimeLeft > 0)
+            {
+                ShieldCooldownTimeLeft -= Time.deltaTime;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1)) // Dash input
+            {
+                
+                SuperDeath();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                Shield();
+            }
+
+            base.Tick();
         }
-        private void FillComplete()
+
+        public void SuperDeath()
         {
-            Dash_Text.gameObject.SetActive(false);
+            if (SuperDCooldownTimeLeft <= 0)
+            {
+                CoreGameSignals.OnSuperDUsed?.Invoke();
+                isSuperD = true;
+                //Animate Here
+                SuperDParticleActive();
+                SuperDTimeLeft = SuperDDuration;
+                SuperDCooldownTimeLeft = SuperDCooldown;
+                
+            }
         }
-        private void UpdateTimerText()
+
+        public void Shield()
         {
-            float RemainTime=timer-filltween.Elapsed();
-            Dash_Text.text = RemainTime.ToString("F0");
+            if (ShieldCooldownTimeLeft<=0)
+            {
+                CoreGameSignals.OnShieldUsed?.Invoke();
+                isShield = true;
+                //Animate Here
+                ShieldParticleActive();
+                ShieldTimeLeft = ShieldDuration;
+                ShieldCooldownTimeLeft = ShieldCooldown;
+                OnShieldStateChange?.Invoke(isShield);
+            }
+            
         }
+        
+        private void SuperDParticleActive()
+            {
+                if (SuperDParticleSystem != null)
+                {
+                    if (isSuperD == true)
+                    {
+                        SuperDParticleSystem.gameObject.SetActive(true);
+                        SuperDParticleSystem.Play();
+                        
+                    }
+                    else
+                    {  
+                        SuperDParticleSystem.gameObject.SetActive(false);
+                        SuperDParticleSystem.Stop();
+                    }
+                }
+            }
+
+        private void ShieldParticleActive()
+        {
+            if (ShieldParticleSystem!=null)
+            {
+                if (isShield == true)
+                {
+                    ShieldParticleSystem.gameObject.SetActive(true);
+                    ShieldParticleSystem.Play();
+                }
+                else
+                {
+                    ShieldParticleSystem.gameObject.SetActive(false);
+                    ShieldParticleSystem.Stop();
+                }
+            }
+        }
+
+        private void UpdateSuperD()
+        {
+            if (isSuperD)
+            {
+                SuperDTimeLeft -= Time.deltaTime;
+                if (SuperDTimeLeft <= 0)
+                {
+                    isSuperD = false;
+                    SuperDParticleActive();
+                }
+                
+                
+            }
+        }
+        private void UpdateShield()
+        {
+            if (isShield)
+            {
+                ShieldTimeLeft -= Time.deltaTime;
+                if (ShieldTimeLeft <= 0)
+                {
+                    isShield = false;
+                    ShieldParticleActive();
+                    OnShieldStateChange?.Invoke(isShield);
+                }
+                
+                
+            }
+            
+        }
+        
+        
     }
-    
-    
 }

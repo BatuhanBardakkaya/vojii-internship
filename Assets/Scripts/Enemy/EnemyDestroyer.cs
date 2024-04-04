@@ -21,14 +21,17 @@ public class EnemyDestroyer : AgentModuleBase
     {
         CoreGameSignals.OnFireballHit += TakeDamage;
         CoreGameSignals.OnSpecialHit += TakeDamage;
-        
-        
+        EnemyGameSignals.OnEnemyKilled += EnemyDead;
+        CoreGameSignals.OnSuperDeathHit += TakeDamage;
+
     }
 
     public void OnDisable()
     {
         CoreGameSignals.OnFireballHit -= TakeDamage;
         CoreGameSignals.OnSpecialHit -= TakeDamage;
+        EnemyGameSignals.OnEnemyKilled -= EnemyDead;
+        CoreGameSignals.OnSuperDeathHit -= TakeDamage;
     }
     
     public void TakeDamage(GameObject enemy,int damage)
@@ -40,5 +43,23 @@ public class EnemyDestroyer : AgentModuleBase
             _animator.SetTrigger("GetHit");   
             
         }
+    }
+
+    public void EnemyDead(GameObject enemy)
+    {
+        if (enemy == this.gameObject)
+        {
+            _animator.SetTrigger("Death");
+        }
+        
+        
+    }
+
+    public void EnemyDestroy()
+    {
+        
+            gameObject.SetActive(false);
+        
+        
     }
 }

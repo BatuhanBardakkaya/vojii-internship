@@ -20,25 +20,23 @@ public class PlayerDestroyer : MonoBehaviour
         {
            
             CoreGameSignals.OnPlayerTakeDamage += TakeDamage;
+            CoreGameSignals.OnPlayerDeath += PlayerDestroy;
         }
     
         public void OnDisable()
         {
             CoreGameSignals.OnPlayerTakeDamage -= TakeDamage;
+            CoreGameSignals.OnPlayerDeath -= PlayerDestroy;
 
         }
         
-        public void TakeDamage(GameObject enemy,int damage)// burası olmayacak aslında
+        public void TakeDamage(GameObject enemy,int damage)
         {
-                
-                _animator.SetTrigger("GetHit");
-                health -= damage;
-                
-                 if (health <= 0)
-                 {
-                        Destroy(this.gameObject); 
-                 }
-                               
+            _animator.SetTrigger("GetHit");
         }
-        
+
+        private void PlayerDestroy()
+        {
+            Destroy(this.gameObject);
+        }
 }

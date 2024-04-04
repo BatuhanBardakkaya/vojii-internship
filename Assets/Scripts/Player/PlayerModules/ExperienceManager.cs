@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Player.PlayerModules;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -24,6 +25,7 @@ public class ExperienceManager : MonoBehaviour
     private ParticleSystem LevelupParticleSystem;
     void Start()
     {
+        currentLevel = 1;
         LevelupParticleSystem = GameObject.FindGameObjectWithTag("Levelup").GetComponent<ParticleSystem>();
         UpdateLevel();
     }
@@ -40,7 +42,6 @@ public class ExperienceManager : MonoBehaviour
 
     public void AddExperience(float amount)
     {
-        Debug.Log("Xp Değeri" + amount);
         totalExperience += amount;
         CheckForLevelUp();
         UpdateInterface();
@@ -59,18 +60,21 @@ public class ExperienceManager : MonoBehaviour
 
     void UpdateLevel()
     {
-        previousLevelsExperience = (int)experienceCurve.Evaluate(currentLevel);
-        nextLevelsExperience = (int)experienceCurve.Evaluate(currentLevel + 1);
+        previousLevelsExperience = (int)experienceCurve.Evaluate(currentLevel-1);
+        nextLevelsExperience = (int)experienceCurve.Evaluate(currentLevel);
         UpdateInterface();
     }
 
     void UpdateInterface()
     {
         float start = totalExperience - previousLevelsExperience;
-        float end = nextLevelsExperience - previousLevelsExperience; 
+        float end = nextLevelsExperience - previousLevelsExperience;
 
         levelText.text = currentLevel.ToString();
         experienceText.text = start + " exp / " + end + " exp";
-        experienceFill.fillAmount = (float)start / (float)end;
+        
+        float currentFill = experienceFill.fillAmount;
+        float targetFill = (float)start / (float)end;
+        experienceFill.DOFillAmount(targetFill, 0.5f).SetEase(Ease.OutQuad); 
     }
 }

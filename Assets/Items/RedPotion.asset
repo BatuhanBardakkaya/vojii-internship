@@ -18,3 +18,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: b7d19ec039fa7b141bd165aa95496c75, type: 3}
   itemType: 0
   ItemPrefab: {fileID: 520155108706962072, guid: a942d237a6a85d8469d13476c0ffc3b9, type: 3}
+  amount: 1

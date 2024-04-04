@@ -8,7 +8,8 @@ using UnityEngine.AI;
 public enum Enemies
 {
     Rogue,
-    Warrior
+    Warrior,
+    Boss
 }
 
 public class EnemyNavigation : MonoBehaviour
@@ -17,6 +18,9 @@ public class EnemyNavigation : MonoBehaviour
     private Animator _animator;
     private float time;
     public Enemies Enemies;
+    private bool bossStage2;
+    private bool bossStage3;
+    private int damage;
 
     [SerializeField] private Transform playerTransform;
     
@@ -26,6 +30,7 @@ public class EnemyNavigation : MonoBehaviour
         _animator = GetComponent<Animator>();
         
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        damage = GameManager.Instance.bosEnemyStatsSo.EnemyStats.Damage;
 
         switch (Enemies)
         {
@@ -35,6 +40,9 @@ public class EnemyNavigation : MonoBehaviour
             case Enemies.Warrior:
                 time = GameManager.Instance.warEnemystatSo.EnemyStats.CooldDown;
                 break;
+            case Enemies.Boss:
+                time = GameManager.Instance.bosEnemyStatsSo.EnemyStats.CooldDown;
+                break;
 
         }
     }
@@ -43,6 +51,8 @@ public class EnemyNavigation : MonoBehaviour
         {
             // Oyuncu spawn olduğunda çalışacak metod
             CoreGameSignals.OnEnemySpawn += OnEnemySpawned;
+            EnemyGameSignals.OnBossStage2 += BossStage2;
+            EnemyGameSignals.OnBossStage3 += BossStage3;
         }
 
         void OnDisable()
@@ -107,7 +117,33 @@ public class EnemyNavigation : MonoBehaviour
                             agent.SetDestination(playerTransform.position);
                          
                         }
-
+                        break;
+                    case Enemies.Boss:
+                        if (distanceToPlayer <= GameManager.Instance.bosEnemyStatsSo.EnemyStats.AttackDistance)
+                        {
+                            agent.SetDestination(transform.position);
+                            time += Time.deltaTime;
+                            if (time >= GameManager.Instance.bosEnemyStatsSo.EnemyStats.CooldDown)
+                            {
+                                Debug.Log("Giriyor Attack");
+                                agent.radius = Mathf.Lerp(agent.radius, 2f, Time.deltaTime*25); 
+                                time = 0;
+                                if (bossStage3 == false)
+                                {
+                                    _animator.SetTrigger("Attack1");
+                                }
+                                else
+                                {
+                                    Debug.Log("Attack2");
+                                    _animator.SetTrigger("Attack2");
+                                }Debug.Log("Stage 3 "+bossStage3);
+                                
+                            }
+                            
+                        }else
+                        {
+                            agent.SetDestination(playerTransform.position);
+                        }
                         break;
 
                 }
@@ -119,6 +155,27 @@ public class EnemyNavigation : MonoBehaviour
                 transform.LookAt(lookDirection);
             }
         }
+
+        private void BossStage2()
+        {
+            if (Enemies == Enemies.Boss)
+            {
+                if (!bossStage2)
+                {
+                    Debug.Log("Activating Boss Stage 2");
+                    bossStage2 = true;
+                    damage += 55; 
+                    Debug.Log("Damage"+ damage);
+                    agent.speed = 8f;
+                }
+                
+            }
+        }
+        private void BossStage3()
+        {
+            bossStage3 = true;
+        }
+        
     }
 
 

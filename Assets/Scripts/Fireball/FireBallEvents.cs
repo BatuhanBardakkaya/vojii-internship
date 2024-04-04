@@ -8,7 +8,8 @@ namespace Fireball
     {
         Fireball,
         SpecialFireball,
-        Special
+        Special,
+        SuperD
     }
     public class FireBallEvents : MonoBehaviour
     {
@@ -27,15 +28,30 @@ namespace Fireball
                 case Skills.Special:
                     damage  = GameManager.Instance.playerstatsSo.PlayerStats.SpecialDamage;
                     break;
+                case Skills.SuperD:
+                    damage = GameManager.Instance.playerstatsSo.PlayerStats.SuperDeathDamage;
+                    break;
             }
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Enemy_Skeleton"))
+            if (skills == Skills.SuperD)
             {
-                CoreGameSignals.OnFireballHit?.Invoke(other.gameObject,damage);
-                this.gameObject.SetActive(false);
+                if (other.CompareTag("Enemy_Skeleton"))
+                {
+                    CoreGameSignals.OnSuperDeathHit?.Invoke(other.gameObject,damage);
+                    
+                }
+            }else if (skills == Skills.Fireball)
+            {
+                if (other.CompareTag("Enemy_Skeleton"))
+                {
+                    CoreGameSignals.OnFireballHit?.Invoke(other.gameObject,damage);
+                    this.gameObject.SetActive(false);
+                }
             }
+            
+            
         }
         private void OnCollisionEnter(Collision other)
         {
@@ -47,5 +63,8 @@ namespace Fireball
                 //this.gameObject.SetActive(false);
             }
         }
+        
+        
+        
     }
 }

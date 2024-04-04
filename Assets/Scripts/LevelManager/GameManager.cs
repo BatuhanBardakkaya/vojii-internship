@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public EnemyStatsSo warEnemystatSo;
     
     public PlayerStatsSO playerstatsSo;
+
+    public EnemyStatsSo bosEnemyStatsSo;
     
     private void Awake()
     {
@@ -31,8 +33,9 @@ public class GameManager : MonoBehaviour
         playerstatsSo = GetPlayerStat();
         rogEnemystatSo = GetRogEnemyStat();
         warEnemystatSo = GetWarEnemyStatsSo();
-        
-        
+        bosEnemyStatsSo = GetBossEnemyStatsSo();
+
+
     }
    
     private EnemyStatsSo GetRogEnemyStat()
@@ -48,5 +51,9 @@ public class GameManager : MonoBehaviour
     {
         return Resources.Load<PlayerStatsSO>("PlayerStats");
     }
-    
+
+    private EnemyStatsSo GetBossEnemyStatsSo()
+    {
+        return Resources.Load<EnemyStatsSo>("BossStats");
+    }
 }

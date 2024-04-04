@@ -17,6 +17,10 @@ TagManager:
   - Inventory
   - Deneme
   - Levelup
+  - Missile
+  - SuperD
+  - Shield
+  - BossTrail
   layers:
   - Default
   - TransparentFX
@@ -28,7 +32,7 @@ TagManager:
   - EaseBarBackGround
   - EaseBarFill
   - Interactable
-  - 
+  - CharacterOnly
   - 
   - 
   - 

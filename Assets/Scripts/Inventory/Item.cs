@@ -12,6 +12,7 @@ namespace Inventory
         public Sprite icon;
         public ItemType itemType;
         public GameObject ItemPrefab;
+        public int amount = 1;
         
         public enum ItemType
         {

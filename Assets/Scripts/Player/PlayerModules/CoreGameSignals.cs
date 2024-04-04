@@ -10,6 +10,8 @@ namespace Assets.Scripts.Player.PlayerModules
         public static Action<GameObject, int> OnFireballHit;
 
         public static Action<GameObject, int> OnSpecialHit;
+
+        public static Action<GameObject, int> OnSuperDeathHit;
         
         public static Action<GameObject, int> OnPlayerTakeDamage;
 
@@ -25,7 +27,13 @@ namespace Assets.Scripts.Player.PlayerModules
 
         public static Action<float> OnGetExperiance;
 
+        public static Action OnItemUsed;
 
+        public static Action OnSuperDUsed;
+        
+        public static Action OnShieldUsed;
+
+        public static Action OnPlayerDeath;
 
 
 

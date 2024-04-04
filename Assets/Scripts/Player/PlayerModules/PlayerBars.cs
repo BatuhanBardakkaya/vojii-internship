@@ -16,18 +16,20 @@ public class PlayerBars : AgentModuleBase
     public float maxHealth;
     public float health;
     private float lerpSpeed = 0.75f;
-
+    private bool isShieldActive = false;
     
     private void OnEnable()
     {
         CoreGameSignals.OnPlayerTakeDamage += TakeDamage;
         CoreGameSignals.OnHealthPotionUsed += IncreaseHealth;
+        PlayerSkill.OnShieldStateChange += UpdateShieldStatus;
     }
 
     private void OnDisable()
     {
         CoreGameSignals.OnPlayerTakeDamage -= TakeDamage;
         CoreGameSignals.OnHealthPotionUsed -= IncreaseHealth;
+        PlayerSkill.OnShieldStateChange -= UpdateShieldStatus;
     }
 
     private void Start()
@@ -38,20 +40,26 @@ public class PlayerBars : AgentModuleBase
         healthSlider.value = health;
         EasehealthSlider.maxValue = health;
         EasehealthSlider.value = health;
-        Debug.Log("Player Bars Health:"+health);
         
     }
     
     public void TakeDamage(GameObject enemy ,int damage)
     {
-            health -= damage;
-           // Debug.Log("Damage: " + damage + ", Health left: " + health);
-
-            healthSlider.value = health;
-
-            if (EasehealthSlider.value > health)
+            if (!isShieldActive)
             {
-                AnimateSliderValue(EasehealthSlider, health, lerpSpeed);
+                health -= damage;
+            
+                healthSlider.value = health;
+
+                if (EasehealthSlider.value > health)
+                {
+                    AnimateSliderValue(EasehealthSlider, health, lerpSpeed);
+                }
+
+                if (health <=0)
+                {
+                    CoreGameSignals.OnPlayerDeath?.Invoke();
+                }
             }
         
     }
@@ -61,6 +69,11 @@ public class PlayerBars : AgentModuleBase
           
     }
 
+    private void UpdateShieldStatus(bool isActive)
+    {
+        isShieldActive = isActive;
+    }
+    
     public void IncreaseHealth(int value)
     {
         if (health>=maxHealth)
@@ -72,10 +85,9 @@ public class PlayerBars : AgentModuleBase
         else
         {
             health += value;
+            healthSlider.value = health;
             Debug.Log("Can2"+health);
-        }    
-        
-        
+        }   
         
     }
 }

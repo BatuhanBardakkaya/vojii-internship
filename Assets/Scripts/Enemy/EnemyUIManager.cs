@@ -37,7 +37,7 @@ public class EnemyUIManager : MonoBehaviour
         UpdateEnemyCounterText();
     }
 
-    private void UpdateEnemiesKilled()
+    private void UpdateEnemiesKilled(GameObject enemy)
     {
         enemiesKilled++;
         UpdateEnemyCounterText();

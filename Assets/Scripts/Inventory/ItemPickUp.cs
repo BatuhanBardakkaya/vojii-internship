@@ -32,7 +32,6 @@ namespace Inventory
         public bool Interact(Interactor interactor)
         {
             StartCoroutine(Pickup());
-            //Pickup();
             return true;
         }
     }

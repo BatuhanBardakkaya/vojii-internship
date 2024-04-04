@@ -22,11 +22,13 @@ public class EnemyBars : MonoBehaviour
       {
           CoreGameSignals.OnFireballHit += TakeDamage;
           CoreGameSignals.OnSpecialHit += TakeDamage;
+          CoreGameSignals.OnSuperDeathHit += TakeDamage;
       }
       private void OnDisable()
       {
           CoreGameSignals.OnFireballHit -= TakeDamage;
           CoreGameSignals.OnSpecialHit -= TakeDamage;
+          CoreGameSignals.OnSuperDeathHit -= TakeDamage;
       }
       private void Start()
       {
@@ -62,6 +64,7 @@ public class EnemyBars : MonoBehaviour
           
           if (enemy == rootParentGameObject)
           {
+              Debug.Log("Hitted:"+damage);
               health -= damage;
               healthSlider.value = health;
 
@@ -73,9 +76,9 @@ public class EnemyBars : MonoBehaviour
               if (health <= 0)
               {
                   SpawnLoot();
-                  rootParentGameObject.SetActive(false);
+                  //rootParentGameObject.SetActive(false);
                   CoreGameSignals.OnGetExperiance?.Invoke(experience);
-                  EnemyGameSignals.OnEnemyKilled?.Invoke();
+                  EnemyGameSignals.OnEnemyKilled?.Invoke(enemy);
                   
               }
           }

@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Player.PlayerModules;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +32,18 @@ namespace Inventory
             
         }
 
+        private void OnEnable()
+        {
+            CoreGameSignals.OnItemUsed += RRefreshInventory;
+        }
+
+        private void OnDisable()
+        {
+            CoreGameSignals.OnItemUsed -= RRefreshInventory;
+            
+            
+        }
+
         private void Update()
         {
             
@@ -57,10 +71,37 @@ namespace Inventory
             }
         }
 
+        public void RRefreshInventory()
+        {
+            StartCoroutine(RefreshInventory());
+        }
+        IEnumerator RefreshInventory()
+        {
+            ClearList();
+            yield return new WaitForSeconds(0.1f);
+            Debug.Log("Girmiyor");
+            ListItems();
+        }
 
         public void Add(Item item)
         {
-            Items.Add(item);
+            bool itemExists = false;
+            foreach (var inventoryItem in Items)
+            {
+                if (inventoryItem.id == item.id) // Öğe zaten envanterde var mı?
+                {
+                    inventoryItem.amount += 1; // Miktarı artır
+                    item.amount = inventoryItem.amount;
+                    itemExists = true;
+                    break;
+                }
+            }
+    
+            if (!itemExists)
+            {
+                Items.Add(item);
+                item.amount = 1;
+            }
         }
 
         public void Remove(Item item)
@@ -83,11 +124,13 @@ namespace Inventory
                 GameObject obj = Instantiate(InventoryItem, ItemContent);
                 var itemName = obj.transform.Find("ItemName").GetComponent<TMP_Text>();
                 var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
+                var itemAmount = obj.transform.Find("ItemAmount").GetComponent<TMP_Text>();
                 var DeleteButton = obj.transform.Find("DeleteItem").GetComponent<Button>();
                 
                 
                 itemName.text = item.itemName;
                 itemIcon.sprite = item.icon;
+                itemAmount.text = item.amount.ToString();
 
                if (EnableRemove.isOn)
                 {
@@ -95,6 +138,7 @@ namespace Inventory
                 }
             }
             SetInventoryItems();
+            Debug.Log("Remov");
         }
 
         public void EnableItemsRemove()
