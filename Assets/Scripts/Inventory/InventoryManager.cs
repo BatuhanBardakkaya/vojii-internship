@@ -56,6 +56,7 @@ namespace Inventory
                     {
                         ListItems();
                         Inventory.SetActive(true);
+                        GameManager.Instance.ToggleCursor(true);
                     }
                     else
                     {
@@ -66,6 +67,7 @@ namespace Inventory
                 {
                     ClearList();
                     Inventory.SetActive(false);
+                    GameManager.Instance.ToggleCursor(false);
                 }
                 
             }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WarriorEnemyStats
   m_EditorClassIdentifier: 
   EnemyStats:
-    Health: 1
+    Health: 150
     Damage: 10
     CooldDown: 1
     AttackDistance: 2

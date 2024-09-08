@@ -18,7 +18,13 @@ public class GameManager : MonoBehaviour
     public PlayerStatsSO playerstatsSo;
 
     public EnemyStatsSo bosEnemyStatsSo;
-    
+
+
+    private void Start()
+    {
+        ToggleCursor(false);
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -55,5 +61,12 @@ public class GameManager : MonoBehaviour
     private EnemyStatsSo GetBossEnemyStatsSo()
     {
         return Resources.Load<EnemyStatsSo>("BossStats");
+    }
+
+    public void ToggleCursor(bool iscursoron)
+    {
+        Cursor.visible = iscursoron;
+        Cursor.lockState = iscursoron ? CursorLockMode.None : CursorLockMode.Locked;
+
     }
 }
